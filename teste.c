@@ -1,4 +1,4 @@
 int main() {
 
-    fsafas;
 }
+tá aqui
