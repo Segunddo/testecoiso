@@ -1,4 +1,4 @@
-int main() 
-{
-    printf("abner");
+int main() {
+
+    fsafas;
 }
