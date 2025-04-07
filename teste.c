@@ -3,7 +3,7 @@
 #include <string.h>
 #include <windows.h>
 #include <unistd.h>
-
+//a
 struct nomeNotas {
 
     char nome[20];
@@ -87,7 +87,7 @@ int main() {
         } else {
             quantReprov++;
         }
-        
+
     }
 
     float percent;
