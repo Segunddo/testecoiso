@@ -78,15 +78,17 @@ int main() {
             printf("Digite o nome do aluno:\n");
             fflush(stdin);
             fgets(nomePesquisa,30,stdin);
-            if (nomePesquisa == fread(nomePesquisa,1,30,open)) {
+            nomePesquisa[strlen(nomePesquisa)-1] = '\0';
+           
+            if (strcmp(nomePesquisa,fgets(nomePesquisa,30,open)) == 0) {
 
-                fseek(open,-sizeof(nomePesquisa), SEEK_CUR);
+                fseek(open,-1 * sizeof(nomePesquisa), SEEK_CUR);
                 
                 int reset = 0;
                 while(reset == 0) {
 
                     printf("Deseja alterar o nome ou as notas:\n");
-                    printf("Digite:\n0-Mudar nome\n1-Mudar nota 1\n2-Mudar nota 2\nDigite qualquer coisa para voltar");
+                    printf("Digite:\n0-Mudar nome\n1-Mudar nota 1\n2-Mudar nota 2\nDigite outro numero para encerrar\n");
                     int opcao;
                     scanf("%d", &opcao);
                     int novaNota;
