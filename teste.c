@@ -3,14 +3,14 @@
 #include <string.h>
 #include <windows.h>
 #include <unistd.h>
-//a
+
 struct nomeNotas {
 
     char nome[20];
     char notas1[3];
     char notas2[3];
-    int n1;
-    int n2;
+    float n1;
+    float n2;
 
 };
 
@@ -26,7 +26,7 @@ int main() {
 
     struct nomeNotas name[*n];
 
-    open = fopen("teste.txt", "r+");
+    open = fopen("quest3.txt", "r+");
 
     //carregar arquivo (jeito chique)
     if (open == NULL) {
@@ -43,7 +43,7 @@ int main() {
         sleep(1);
         #endif
 
-        open = fopen("teste.txt", "w");
+        open = fopen("quest3.txt", "w");
 
     }
 
@@ -97,4 +97,5 @@ int main() {
     fprintf(open, "Media: %.2f Aprovados:%d Reprovados: %d Percent: %.2f%%", mediaClasse / *n, quantAprov, quantReprov, percent*100);
 
     fclose(open);
+    free(n);
 }
