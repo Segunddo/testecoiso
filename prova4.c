@@ -53,23 +53,19 @@ int main() {
             fgets(name[i].nome, 100, stdin);
         
             printf("Digite 2 notas:\n");
-    
-            scanf("%s ", name[i].notas1);
-            scanf("%s", name[i].notas2);
+            
+            fgets(name[i].notas1,3,stdin);
+            fgets(name[i].notas2,3,stdin);
             
             fputs(name[i].nome,open);
             fputs(name[i].notas1,open);
-    
-            fputc(barraN,open);
-    
             fputs(name[i].notas2,open);
     
-            fputc(barraN,open);
             
         }
 
     } else {
-        printf("Deseja editar o arquivo existente?\nDigite 's' para sim.");
+        printf("Deseja editar o arquivo existente?\nDigite 's' para sim.\n");
         char sim = 's';
         scanf("%c", &sim);
         
@@ -78,46 +74,72 @@ int main() {
             printf("Digite o nome do aluno:\n");
             fflush(stdin);
             fgets(nomePesquisa,30,stdin);
-            nomePesquisa[strlen(nomePesquisa)-1] = '\0';
-           
-            if (strcmp(nomePesquisa,fgets(nomePesquisa,30,open)) == 0) {
+            
+            char copia[1000];
+            fread(copia, sizeof(char), 999, open);
 
-                fseek(open,-1 * sizeof(nomePesquisa), SEEK_CUR);
-                
+            if (strstr(copia,nomePesquisa)) {
+
                 int reset = 0;
                 while(reset == 0) {
 
-                    printf("Deseja alterar o nome ou as notas:\n");
                     printf("Digite:\n0-Mudar nome\n1-Mudar nota 1\n2-Mudar nota 2\nDigite outro numero para encerrar\n");
                     int opcao;
                     scanf("%d", &opcao);
-                    int novaNota;
+
+                    char novaNota[2];
                     char novoNome[30];
+                    int local = 0;
+                    char *copiapt;
+                    char *pt;
 
                     switch (opcao)
                     {
+                        
                         case 0:
-
+                            
+                            pt = strstr(copia,nomePesquisa);
+                            
+                            for(copiapt = copia; copiapt != pt; copiapt++) {
+                                local++;
+                            }
+                            fseek(open, local, SEEK_SET);
                             fflush(stdin);
+                            printf("Digite o novo nome:\n");
                             fgets(novoNome,30,stdin);
                             fprintf(open,novoNome);
 
                             break;
                         case 1:
 
-                            fseek(open,1, SEEK_CUR);
-                            printf("Escreva a nova nota:\n");
-                            scanf("%d ", &novaNota);
-                            fprintf(open, (char*) novaNota);
-
+                            pt = strstr(copia,nomePesquisa);
+                            copiapt = copia;
+                            for(copiapt = copia; copiapt != pt; copiapt++) {
+                                local++;
+                            }
+                            local += strlen(nomePesquisa) + 1;
+                           
+                            fseek(open, local, SEEK_SET);
+                            printf("Digite a nova nota:\n");
+                            fflush(stdin);
+                            fgets(novaNota,2,stdin);
+                            fprintf(open,novaNota);
                             break;
                         case 2:
 
-                            fseek(open,2, SEEK_CUR);
-                            printf("Escreva a nova nota:\n");
-                            scanf("%d ", &novaNota);
-                            fprintf(open, (char*) novaNota);
-
+                            pt = strstr(copia,nomePesquisa);
+                            copiapt = copia;
+                            
+                            for(copiapt = copia; copiapt != pt; copiapt++) {
+                                local++;
+                            }
+                            local += strlen(nomePesquisa) + 2;
+                            
+                            fseek(open, local, SEEK_SET);
+                            printf("Digite a nova nota:\n");
+                            fflush(stdin);
+                            fgets(novaNota,2,stdin);
+                            fprintf(open,novaNota);
                             break;        
                     
                         default:
@@ -127,7 +149,7 @@ int main() {
                     }
                 }
                 
-            }
+            } else {printf("Ninguem encontrado...\n");}
             
         } else {printf("Encerrando...");}
     }
